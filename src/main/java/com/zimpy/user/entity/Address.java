@@ -17,12 +17,12 @@ public class Address {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Type type;//Home, Work
+    private Type type;//HOME, WORK
 
     @Column(name = "address_line1",nullable = false)
-    private String AddressLine1;
+    private String addressLine1;
     @Column(name = "address_line2")
-    private String AddressLine2;
+    private String addressLine2;
 
     @Column(nullable = false,length = 50)
     private String city;
@@ -34,7 +34,7 @@ public class Address {
     private String postalCode;
 
     @Column(name = "is_default",nullable = false)
-    private Boolean isDefault;
+    private Boolean isDefault ;
 
     @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
@@ -48,7 +48,7 @@ public class Address {
         createdAt=LocalDateTime.now();
         updatedAt=LocalDateTime.now();
     }
-
+    @PreUpdate
     protected void onUpdate(){
         updatedAt=LocalDateTime.now();
     }
@@ -78,19 +78,19 @@ public class Address {
     }
 
     public String getAddressLine1() {
-        return AddressLine1;
+        return addressLine1;
     }
 
     public void setAddressLine1(String addressLine1) {
-        AddressLine1 = addressLine1;
+        this.addressLine1 = addressLine1;
     }
 
     public String getAddressLine2() {
-        return AddressLine2;
+        return addressLine2;
     }
 
     public void setAddressLine2(String addressLine2) {
-        AddressLine2 = addressLine2;
+        this.addressLine2 = addressLine2;
     }
 
     public String getCity() {
@@ -149,7 +149,7 @@ public class Address {
         this.deletedAt = deletedAt;
     }
 
-    public Boolean getDefault() {
+    public Boolean isDefault() {
         return isDefault;
     }
 

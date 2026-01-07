@@ -5,18 +5,26 @@ import com.zimpy.user.entity.Type;
 public class AddressResponse {
     private Long id;
     private String addressLine1;
-    private String getAddressLine2;
+    private String addressLine2;
     private String city;
     private String state;
     private String country;
     private String postalCode;
-    private String type;
+    private Type type;
     private boolean isDefault;
 
-    public AddressResponse(Long id, String addressLine1, String getAddressLine2, String city, String postalCode, Type type, boolean isDefault, String state, String country) {
+    public AddressResponse(Long id,
+                           String addressLine1,
+                           String addressLine2,
+                           String city,
+                           String postalCode,
+                           Type type,
+                           boolean isDefault,
+                           String state,
+                           String country) {
         this.id = id;
         this.addressLine1 = addressLine1;
-        this.getAddressLine2 = getAddressLine2;
+        this.addressLine2 = addressLine2;
         this.city = city;
         this.postalCode = postalCode;
         this.type = type;
@@ -29,8 +37,8 @@ public class AddressResponse {
         return id;
     }
 
-    public String getGetAddressLine2() {
-        return getAddressLine2;
+    public String getAddressLine2() {
+        return addressLine2;
     }
 
     public String getAddressLine1() {
@@ -53,7 +61,7 @@ public class AddressResponse {
         return postalCode;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
