@@ -1,4 +1,4 @@
-package com.zimpy.catalog.util;
+package com.zimpy.util;
 
 public class SlugUtil {
     public static String toSlug(String input){

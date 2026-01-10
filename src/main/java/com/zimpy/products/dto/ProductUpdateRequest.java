@@ -1,19 +1,14 @@
 package com.zimpy.products.dto;
 
-import jakarta.persistence.JoinTable;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
-public class ProductRequest {
-
-    @NotBlank
+public class ProductUpdateRequest {
     private String name;
-    @NotBlank
     private String summary;
     private String description;
     private String brand;
-    @NotNull
     private Long categoryId;
+    private Boolean isActive;
 
     public String getName() {
         return name;
@@ -55,6 +50,12 @@ public class ProductRequest {
         this.categoryId = categoryId;
     }
 
+    public Boolean getActive() {
+        return isActive;
 
+    }
 
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 }

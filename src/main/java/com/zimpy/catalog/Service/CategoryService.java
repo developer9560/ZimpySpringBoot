@@ -6,10 +6,9 @@ import com.zimpy.catalog.dto.CategoryTreeResponse;
 import com.zimpy.catalog.dto.UpdateRequest;
 import com.zimpy.catalog.entity.Category;
 import com.zimpy.catalog.repository.CategoryRepository;
-import com.zimpy.catalog.util.SlugUtil;
+import com.zimpy.util.SlugUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.time.LocalDateTime;
 import java.util.List;
