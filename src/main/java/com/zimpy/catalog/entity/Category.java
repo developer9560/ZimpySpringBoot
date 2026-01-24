@@ -26,6 +26,9 @@ public class Category {
     @Column(nullable = false)
     private int level;
 
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
+
     //self reference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -118,6 +121,14 @@ public class Category {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public LocalDateTime getDeletedAt() {

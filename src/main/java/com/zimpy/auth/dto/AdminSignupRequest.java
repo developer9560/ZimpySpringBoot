@@ -22,8 +22,7 @@ public class AdminSignupRequest {
     @NotBlank
     private String role ="ADMIN";
 
-    private String firstName;
-    private String lastName;
+    private String fullName;
 
     public String getEmail() {
         return email;
@@ -57,19 +56,11 @@ public class AdminSignupRequest {
         this.role = role;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFirstName(String fullName) {
+        this.fullName = fullName;
     }
 }

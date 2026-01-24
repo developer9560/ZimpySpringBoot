@@ -1,5 +1,6 @@
 package com.zimpy.productImage.Service;
 
+import com.zimpy.exception.ResourceNotFoundException;
 import com.zimpy.productImage.dto.ProductImageRequest;
 import com.zimpy.productImage.dto.ProductImageResponse;
 import com.zimpy.productImage.entity.ProductImage;
@@ -27,10 +28,10 @@ public class ProductImageService {
     }
 
     @Transactional
-    public void addImage(Long productId, ProductImageRequest request){
+    public ProductImageResponse addImage(Long productId, ProductImageRequest request){
 
         Product product = productRepository.findByIdAndDeletedAtIsNull(productId)
-                .orElseThrow(()-> new RuntimeException("Product not found with this "+ productId));
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found with this "+ productId));
         if(request.isPrimary()){
             imageRepository.findByProductAndPrimaryImageTrue(product)
                     .ifPresent(img->img.setPrimaryImage(false));
@@ -40,25 +41,27 @@ public class ProductImageService {
         image.setImageUrl(request.getImageUrl());
         image.setPrimaryImage(request.isPrimary());
         image.setSortOrder(request.getSortOrder());
-        imageRepository.save(image);
+       ProductImage savedImage =  imageRepository.save(image);
+       return ImageEntityToResponse(savedImage);
+
 
     }
     @Transactional
     public void deleteImage(Long imageId){
-        ProductImage image = imageRepository.findById(imageId).orElseThrow(()->new RuntimeException("Image not found"));
+        ProductImage image = imageRepository.findById(imageId).orElseThrow(()->new ResourceNotFoundException("Image not found"));
         imageRepository.delete(image);
 
     }
     public List<ProductImageResponse> getImages(Long productId){
         Product product = productRepository.findByIdAndDeletedAtIsNull(productId)
-                .orElseThrow(()-> new RuntimeException("Product not found"));
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found"));
         return imageRepository.findByProductOrderBySortOrderAsc(product)
                 .stream().map(this::ImageEntityToResponse).toList();
     }
 
     public void setPrimary(Long imageId){
         ProductImage image = imageRepository.findById(imageId)
-                .orElseThrow(()-> new RuntimeException("Image not found"));
+                .orElseThrow(()-> new ResourceNotFoundException("Image not found"));
         Product product = image.getProduct();
         imageRepository.findByProductAndPrimaryImageTrue(product)
                 .ifPresent(img->img.setPrimaryImage(false));
@@ -69,15 +72,16 @@ public class ProductImageService {
 
 
     private ProductImageResponse ImageEntityToResponse(ProductImage productImage){
-        return new ProductImageResponse(productImage.getId(), productImage.isPrimaryImage(), productImage.getSortOrder(), productImage.getImageUrl());
+
+        return new ProductImageResponse(productImage.getId(), productImage.isPrimaryImage(), productImage.getSortOrder(), productImage.getImageUrl(),productImage.getProduct().getId());
     }
 
 
     @Transactional
-    public void uploadAndSave(Long productId, MultipartFile file, boolean primary, int sortOrder) {
+    public ProductImageResponse uploadAndSave(Long productId, MultipartFile file, boolean primary, int sortOrder) {
 
         Product product = productRepository.findByIdAndDeletedAtIsNull(productId)
-                .orElseThrow(()-> new RuntimeException("Product not found"));
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found"));
 
         String imageUrl = imageUploadService.uploadImage(file);
 
@@ -92,6 +96,7 @@ public class ProductImageService {
         image.setPrimaryImage(primary);
         image.setSortOrder(sortOrder);
 
-        imageRepository.save(image);
+        ProductImage saved  = imageRepository.save(image);
+        return ImageEntityToResponse(saved);
     }
 }

@@ -2,6 +2,7 @@ package com.zimpy.products.Service;
 
 import com.zimpy.catalog.entity.Category;
 import com.zimpy.catalog.repository.CategoryRepository;
+import com.zimpy.exception.ResourceNotFoundException;
 import com.zimpy.products.dto.CategoryMiniResponse;
 import com.zimpy.products.dto.ProductRequest;
 import com.zimpy.products.dto.ProductResponse;
@@ -29,7 +30,7 @@ public class ProductService {
     @Transactional
     public ProductResponse createProduct(ProductRequest request){
         Product product = new Product();
-        Category category = categoryRepository.findByIdAndDeletedAtIsNull(request.getCategoryId()).orElseThrow(()->new RuntimeException("Category not found with this id "+request.getCategoryId()));
+        Category category = categoryRepository.findByIdAndDeletedAtIsNull(request.getCategoryId()).orElseThrow(()->new ResourceNotFoundException("Category not found with this id "+request.getCategoryId()));
         product.setName(request.getName());
         product.setBrand(request.getBrand());
         product.setSummary(request.getSummary());
@@ -51,10 +52,10 @@ public class ProductService {
     public ProductResponse updateProduct(Long id, ProductUpdateRequest request){
         Product product = productRepository
                 .findByIdAndDeletedAtIsNull(id)
-                .orElseThrow(()-> new RuntimeException(" Product is not found"));
+                .orElseThrow(()-> new ResourceNotFoundException(" Product is not found"));
         // category update
         if(request.getCategoryId()!=null){
-            Category category = categoryRepository.findByIdAndDeletedAtIsNull(request.getCategoryId()).orElseThrow(()-> new RuntimeException("Categoy not found"));
+            Category category = categoryRepository.findByIdAndDeletedAtIsNull(request.getCategoryId()).orElseThrow(()-> new ResourceNotFoundException("Categoy not found"));
             product.setCategory(category);
         }
         if(request.getName()!=null && !request.getName().equals(product.getName())){
@@ -89,7 +90,7 @@ public class ProductService {
 
     @Transactional
     public void deleteProduct(Long id){
-        Product product = productRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(()->new RuntimeException(" product not found with this id : "+ id));
+        Product product = productRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(()->new ResourceNotFoundException(" product not found with this id : "+ id));
         product.setDeletedAt(LocalDateTime.now());
         productRepository.save(product);
     }
@@ -102,7 +103,7 @@ public class ProductService {
     }
 
     public Product getAdminProductById(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(()->new RuntimeException("not found"));
+        Product product = productRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("not found"));
         return product;
     }
 
@@ -111,7 +112,7 @@ public class ProductService {
     }
 
     public void setActive(Long id, boolean b) {
-        Product product = productRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(()->new RuntimeException("products not found"));
+        Product product = productRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(()->new ResourceNotFoundException("products not found"));
         product.setActive(b);
         productRepository.save(product);
 
@@ -124,19 +125,19 @@ public class ProductService {
     public ProductResponse getActiveProductBySlug(String slug) {
         Product product = productRepository
                 .findBySlugAndDeletedAtIsNull(slug)
-                .orElseThrow(()->new RuntimeException("product not found with this id"));
+                .orElseThrow(()->new ResourceNotFoundException("product not found with this id"));
         if(!product.isActive()){
-            throw new RuntimeException("Product is not active");
+            throw new ResourceNotFoundException("Product is not active");
         }
 
         return productEntityToResponse(product);
     }
 
     public ProductResponse getActiveProductById(Long id) {
-        Product product = productRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(()->new RuntimeException("product not found"));
+        Product product = productRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(()->new ResourceNotFoundException("product not found"));
 
         if(!product.isActive()){
-            throw  new RuntimeException("Product is not active");
+            throw  new ResourceNotFoundException("Product is not active");
         }
         return productEntityToResponse(product);
     }
@@ -151,7 +152,7 @@ public class ProductService {
     }
 
     public List<ProductResponse> getSimilarProducts(String slug) {
-        Product product = productRepository.findBySlugAndDeletedAtIsNull(slug).orElseThrow(()->new RuntimeException("Product not found"));
+        Product product = productRepository.findBySlugAndDeletedAtIsNull(slug).orElseThrow(()->new ResourceNotFoundException("Product not found"));
 
         List<Product> similar = productRepository.findTop8ByCategoryAndDeletedAtIsNullAndIdNot(product.getCategory(), product.getId());
         return similar.stream().map(this::productEntityToResponse).toList();

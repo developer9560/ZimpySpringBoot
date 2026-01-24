@@ -15,6 +15,9 @@ public class Address {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
+    @Column(name = "contact_number")
+    private String contactNumber;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Type type;//HOME, WORK
@@ -155,5 +158,17 @@ public class Address {
 
     public void setDefault(Boolean aDefault) {
         isDefault = aDefault;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
     }
 }

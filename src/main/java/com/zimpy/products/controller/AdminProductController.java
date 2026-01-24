@@ -59,9 +59,4 @@ public class AdminProductController {
         return ResponseEntity.noContent().build();
     }
 
-
-
-
-
-
 }

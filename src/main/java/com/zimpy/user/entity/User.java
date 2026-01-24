@@ -7,45 +7,48 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true,nullable = false,length = 15)
+    @Column(unique = true, nullable = false, length = 15)
     private String phone;
 
-    @Column(name = "password_hash",nullable = false)
+    @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(length = 50,name = "first_name")
-    private String firstName;
-    @Column(length = 50, name = "last_name")
-    private String lastName;
+    @Column(length = 50, name = "full_name")
+    private String fullName;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
-    @Column(name = "created_at" ,nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserStatus status;
+
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at",nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name="deleted_at")
+    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
     @PrePersist
-    protected void onCreate(){
-        createdAt=LocalDateTime.now();
-        updatedAt=LocalDateTime.now();
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
-    protected void onUpdate(){
-        updatedAt=LocalDateTime.now();
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -80,20 +83,12 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Role getRole() {
@@ -122,6 +117,14 @@ public class User {
 
     public LocalDateTime getDeletedAt() {
         return deletedAt;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     public void setDeletedAt(LocalDateTime deletedAt) {

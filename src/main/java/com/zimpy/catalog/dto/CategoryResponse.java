@@ -1,18 +1,20 @@
 package com.zimpy.catalog.dto;
 
-import org.springframework.context.annotation.Primary;
+
 
 public class CategoryResponse {
     private Long id;
-    private String  name;
+    private String name;
     private String slug;
+    private String imageUrl;
     private int level;
 
-    public CategoryResponse(Long id, String name, String slug,int level) {
+    public CategoryResponse(Long id, String name, String slug, int level, String imageUrl) {
         this.id = id;
         this.name = name;
         this.slug = slug;
         this.level = level;
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {
@@ -45,5 +47,13 @@ public class CategoryResponse {
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

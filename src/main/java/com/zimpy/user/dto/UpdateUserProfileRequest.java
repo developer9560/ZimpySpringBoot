@@ -4,23 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 
 public class UpdateUserProfileRequest {
     @NotBlank
-    private String firstName;
-    @NotBlank
-    private String lastName;
+    private String fullName;
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 }

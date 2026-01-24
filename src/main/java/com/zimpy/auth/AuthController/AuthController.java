@@ -43,8 +43,7 @@ public class AuthController {
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setFullName(request.getFirstName());
         user.setRole(Role.USER);
 
         userRepository.save(user);
@@ -68,7 +67,7 @@ public class AuthController {
 
         return ResponseEntity.ok(new LoginResponse(token));
     }
-    @PostMapping("/admin/signup")
+    @PostMapping("/admin-suraj/signup/admin")
     public ResponseEntity<?> Adminsignup(@Valid @RequestBody AdminSignupRequest request) {
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -83,8 +82,7 @@ public class AuthController {
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
+        user.setFullName(request.getFullName());
         user.setRole(Role.ADMIN);
 
         userRepository.save(user);

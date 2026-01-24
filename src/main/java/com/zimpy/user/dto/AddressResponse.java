@@ -12,6 +12,7 @@ public class AddressResponse {
     private String postalCode;
     private Type type;
     private boolean isDefault;
+    private String contactNumber;
 
     public AddressResponse(Long id,
                            String addressLine1,
@@ -21,7 +22,8 @@ public class AddressResponse {
                            Type type,
                            boolean isDefault,
                            String state,
-                           String country) {
+                           String country,
+                           String contactNumber) {
         this.id = id;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
@@ -31,6 +33,7 @@ public class AddressResponse {
         this.isDefault = isDefault;
         this.state = state;
         this.country = country;
+        this.contactNumber = contactNumber;
     }
 
     public Long getId() {
@@ -63,6 +66,18 @@ public class AddressResponse {
 
     public Type getType() {
         return type;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public boolean isDefault() {

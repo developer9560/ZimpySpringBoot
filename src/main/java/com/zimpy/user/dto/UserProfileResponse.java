@@ -5,21 +5,18 @@ public class UserProfileResponse {
     private Long id;
     private String email;
     private String phone;
-    private String firstName;
-    private String lastName;
+    private String fullName;
 
     public UserProfileResponse(
             Long id,
             String email,
             String phone,
-            String firstName,
-            String lastName
-    ) {
+            String fullName) {
         this.id = id;
         this.email = email;
         this.phone = phone;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
+
     }
 
     // getters
@@ -36,11 +33,7 @@ public class UserProfileResponse {
         return phone;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+    public String getFullName() {
+        return fullName;
     }
 }

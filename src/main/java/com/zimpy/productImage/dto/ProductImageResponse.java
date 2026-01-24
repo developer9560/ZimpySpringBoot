@@ -5,12 +5,14 @@ public class ProductImageResponse {
     private String imageUrl;
     private boolean isPrimary;
     private int sortOrder;
+    private  Long productId;
 
-    public ProductImageResponse(Long id, boolean isPrimary, int sortOrder, String imageUrl) {
+    public ProductImageResponse(Long id, boolean isPrimary, int sortOrder, String imageUrl, Long productId) {
         this.id = id;
         this.isPrimary = isPrimary;
         this.sortOrder = sortOrder;
         this.imageUrl = imageUrl;
+        this.productId = productId;
     }
 
     public Long getId() {
@@ -43,5 +45,13 @@ public class ProductImageResponse {
 
     public void setSortOrder(int sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

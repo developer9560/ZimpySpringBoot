@@ -10,7 +10,7 @@ public class AddressRequest {
     private String addressLine1;
 
     private String addressLine2;
-
+    private String contactNumber;
     @NotNull
     private Type type;
 
@@ -22,7 +22,7 @@ public class AddressRequest {
     private String country;
     @NotBlank
     private String postalCode;
-    @NotNull
+
     private boolean isDefault;
 
 
@@ -65,6 +65,9 @@ public class AddressRequest {
         return postalCode;
     }
 
+    public String getContactNumber() {
+        return contactNumber;
+    }
 
     public boolean isDefault() {
         return isDefault;
